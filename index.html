@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/konva@7.1.3/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+    <title>Draggable Stage Scroll Demo</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f0f0f0;
+        
+        touch-action: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <script>
+      
+      function clamp(x, min, max) {
+        if (x < min)
+          return min;
+        else if (x > max)
+          return max;
+        return x;
+      }
+    
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+      
+      var stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height,
+        draggable: true,
+        /*dragBoundFunc: function (pos) {
+          return {
+            x: clamp(pos.x, -3000, 0),
+            y: clamp(pos.y, -3000, 0),
+          };
+        },*/
+      });
+
+      var layer = new Konva.Layer();
+      stage.add(layer);
+
+      ////
+      
+      var WIDTH = 3000;
+      var HEIGHT = 3000;
+      var NUMBER = 200;
+
+      function generateNode() {
+        return new Konva.Circle({
+          x: WIDTH * Math.random(),
+          y: HEIGHT * Math.random(),
+          radius: 50,
+          fill: 'red',
+          stroke: 'black',
+          draggable: true,
+        });
+      }
+
+      for (var i = 0; i < NUMBER; i++) {
+        layer.add(generateNode());
+      }
+      layer.draw();
+    </script>
+  </body>
+</html>
